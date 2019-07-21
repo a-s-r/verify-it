@@ -1,0 +1,452 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="ProcessTransaction" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:si="clr-namespace:System.IO;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
+    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>587,3253</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>ProcessTransaction_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="22">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="21">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Description: In this file all other process specific files will be invoked. If an application exception occurs, the current transaction can be retried. If a BRE is thrown, the transaction will be skipped. Can be a flowchart or sequence. " DisplayName="ProcessTransaction" sap:VirtualizedContainerService.HintSize="739,3306" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="ui:GenericValue" Name="dName" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="dEmail" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="dAddress" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="dDob" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="dLicenceID" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="dPanID" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="dLicenceProof" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="dPanProof" />
+      <Variable x:TypeArguments="s:Byte[]" Name="BytesFromQueue" />
+      <Variable x:TypeArguments="x:String" Name="LicenceData" />
+      <Variable x:TypeArguments="x:String" Name="PanData" />
+      <Variable x:TypeArguments="x:String" Name="pName" />
+      <Variable x:TypeArguments="x:String" Name="pIssueDate" />
+      <Variable x:TypeArguments="x:String" Name="pNumber" />
+      <Variable x:TypeArguments="x:String" Name="pExpireDate" />
+      <Variable x:TypeArguments="x:String" Name="IName" />
+      <Variable x:TypeArguments="x:String" Name="INumber" />
+      <Variable x:TypeArguments="x:String" Name="IDob" />
+      <Variable x:TypeArguments="x:String" Name="IIssueDate" />
+      <Variable x:TypeArguments="x:String" Name="IExpireDate" />
+      <Variable x:TypeArguments="x:String" Name="IAddress" />
+      <Variable x:TypeArguments="x:String" Name="strPName" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="strPID" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="strPExpire" />
+      <Variable x:TypeArguments="x:String" Name="strLAddress" />
+      <Variable x:TypeArguments="x:String" Name="strLID" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="strLExpire" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Assign sap:VirtualizedContainerService.HintSize="701,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+      <Assign.To>
+        <OutArgument x:TypeArguments="ui:GenericValue">[dName]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="ui:GenericValue">[in_TransactionItem.SpecificContent("name").ToString]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="701,60" sap2010:WorkflowViewState.IdRef="Assign_2">
+      <Assign.To>
+        <OutArgument x:TypeArguments="ui:GenericValue">[dEmail]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="ui:GenericValue">[in_TransactionItem.SpecificContent("email").ToString]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="701,60" sap2010:WorkflowViewState.IdRef="Assign_3">
+      <Assign.To>
+        <OutArgument x:TypeArguments="ui:GenericValue">[dAddress]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="ui:GenericValue">[in_TransactionItem.SpecificContent("address").ToString]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="701,60" sap2010:WorkflowViewState.IdRef="Assign_4">
+      <Assign.To>
+        <OutArgument x:TypeArguments="ui:GenericValue">[dDob]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="ui:GenericValue">[in_TransactionItem.SpecificContent("dob").ToString]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="701,60" sap2010:WorkflowViewState.IdRef="Assign_5">
+      <Assign.To>
+        <OutArgument x:TypeArguments="ui:GenericValue">[dLicenceID]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="ui:GenericValue">[in_TransactionItem.SpecificContent("licence_id").ToString]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="701,60" sap2010:WorkflowViewState.IdRef="Assign_6">
+      <Assign.To>
+        <OutArgument x:TypeArguments="ui:GenericValue">[dPanID]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="ui:GenericValue">[in_TransactionItem.SpecificContent("pan_id").ToString]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="701,60" sap2010:WorkflowViewState.IdRef="Assign_7">
+      <Assign.To>
+        <OutArgument x:TypeArguments="ui:GenericValue">[dLicenceProof]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="ui:GenericValue">[in_TransactionItem.SpecificContent("licence_proof").ToString]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="701,60" sap2010:WorkflowViewState.IdRef="Assign_8">
+      <Assign.To>
+        <OutArgument x:TypeArguments="ui:GenericValue">[dPanProof]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="ui:GenericValue">[in_TransactionItem.SpecificContent("pan_proof").ToString]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="701,91" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Trace" Message="[&quot;Application form data --&quot; + dName + &quot;---&quot; + dEmail + &quot;---&quot; + dAddress+ &quot;---&quot; + dDob + &quot;---&quot; + dLicenceID +&quot;---&quot;+ dPanID]" />
+    <InvokeMethod DisplayName="Licence Proof" sap:VirtualizedContainerService.HintSize="701,132" sap2010:WorkflowViewState.IdRef="InvokeMethod_1" MethodName="FromBase64String" TargetType="s:Convert">
+      <InvokeMethod.Result>
+        <OutArgument x:TypeArguments="s:Byte[]">[BytesFromQueue]</OutArgument>
+      </InvokeMethod.Result>
+      <InArgument x:TypeArguments="x:String">[dLicenceProof]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod DisplayName="Licence Write" sap:VirtualizedContainerService.HintSize="701,132" sap2010:WorkflowViewState.IdRef="InvokeMethod_2" MethodName="WriteAllBytes" TargetType="si:File">
+      <InArgument x:TypeArguments="x:String">licence.pdf</InArgument>
+      <InArgument x:TypeArguments="s:Byte[]">[BytesFromQueue]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod DisplayName="Pan Proof" sap:VirtualizedContainerService.HintSize="701,132" sap2010:WorkflowViewState.IdRef="InvokeMethod_3" MethodName="FromBase64String" TargetType="s:Convert">
+      <InvokeMethod.Result>
+        <OutArgument x:TypeArguments="s:Byte[]">[BytesFromQueue]</OutArgument>
+      </InvokeMethod.Result>
+      <InArgument x:TypeArguments="x:String">[dPanProof]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod DisplayName="Pan Write" sap:VirtualizedContainerService.HintSize="701,132" sap2010:WorkflowViewState.IdRef="InvokeMethod_4" MethodName="WriteAllBytes" TargetType="si:File">
+      <InArgument x:TypeArguments="x:String">pan.pdf</InArgument>
+      <InArgument x:TypeArguments="s:Byte[]">[BytesFromQueue]</InArgument>
+    </InvokeMethod>
+    <ui:ReadPDFText DisplayName="Read PDF Text" FileName="[in_Config(&quot;LicencePath&quot;).ToString]" sap:VirtualizedContainerService.HintSize="701,59" sap2010:WorkflowViewState.IdRef="ReadPDFText_1" Range="All" Text="[LicenceData]" />
+    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke Workflow File" sap:VirtualizedContainerService.HintSize="701,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="FilterLicenceData.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="x:String" x:Key="in_LicenceData">[LicenceData]</InArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_LName">[IName]</OutArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_LDob">[IDob]</OutArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_LNumber">[INumber]</OutArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_LIssueDate">[IIssueDate]</OutArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_LAddress">[IAddress]</OutArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_LExpireDate">[IExpireDate]</OutArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="701,91" sap2010:WorkflowViewState.IdRef="LogMessage_12" Level="Trace" Message="[&quot;Process Licence --&quot; + IName + &quot;--&quot; + INumber + &quot;--&quot; + IAddress + &quot;--&quot; + IDob + &quot;--&quot; + IIssueDate + &quot;--&quot; + IExpireDate]" />
+    <ui:ReadPDFText DisplayName="Read PDF Text" FileName="[in_Config(&quot;PanPath&quot;).ToString]" sap:VirtualizedContainerService.HintSize="701,59" sap2010:WorkflowViewState.IdRef="ReadPDFText_2" Range="All" Text="[PanData]" />
+    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke Workflow File" sap:VirtualizedContainerService.HintSize="701,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="FilterPanData.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="x:String" x:Key="in_PanData">[PanData]</InArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_PName">[pName]</OutArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_PIssueDate">[pIssueDate]</OutArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_PNumber">[pNumber]</OutArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_PExpireDate">[pExpireDate]</OutArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="701,91" sap2010:WorkflowViewState.IdRef="LogMessage_11" Level="Trace" Message="[&quot;Process Pan --&quot; + pName + &quot;--&quot; + pNumber + &quot;--&quot; + pIssueDate + &quot;--&quot; + pExpireDate]" />
+    <If Condition="[dName.Equals(pName)]" DisplayName="Check pan name" sap:VirtualizedContainerService.HintSize="701,51" sap2010:WorkflowViewState.IdRef="If_1">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <Assign sap:VirtualizedContainerService.HintSize="258,60" sap2010:WorkflowViewState.IdRef="Assign_17">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:String">[strPName]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:String">
+              <Literal x:TypeArguments="x:String" Value="" />
+            </InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+      <If.Else>
+        <Sequence sap:VirtualizedContainerService.HintSize="368,283" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign sap:VirtualizedContainerService.HintSize="330,60" sap2010:WorkflowViewState.IdRef="Assign_9">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[strPName]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">Pan card name is not correct.</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="330,91" sap2010:WorkflowViewState.IdRef="LogMessage_13" Level="Error" Message="[&quot;Pan Card Name Miss-Match&quot;]" />
+        </Sequence>
+      </If.Else>
+    </If>
+    <If Condition="[dPanID.Equals(pNumber)]" DisplayName="Check pan ID" sap:VirtualizedContainerService.HintSize="701,51" sap2010:WorkflowViewState.IdRef="If_2">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <Assign sap:VirtualizedContainerService.HintSize="258,60" sap2010:WorkflowViewState.IdRef="Assign_18">
+          <Assign.To>
+            <OutArgument x:TypeArguments="ui:GenericValue">[strPID]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="ui:GenericValue">[""]</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+      <If.Else>
+        <Sequence sap:VirtualizedContainerService.HintSize="368,283" sap2010:WorkflowViewState.IdRef="Sequence_4">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign sap:VirtualizedContainerService.HintSize="330,60" sap2010:WorkflowViewState.IdRef="Assign_10">
+            <Assign.To>
+              <OutArgument x:TypeArguments="ui:GenericValue">[strPID]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="ui:GenericValue">["Pan card ID is not correct."]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="330,91" sap2010:WorkflowViewState.IdRef="LogMessage_14" Level="Error" Message="[&quot;Pan Card ID Mis-Match&quot;]" />
+        </Sequence>
+      </If.Else>
+    </If>
+    <If Condition="[DateTime.ParseExact(pExpireDate,&quot;dd/MM/yyyy&quot;,Globalization.CultureInfo.InstalledUICulture) &gt; System.DateTime.Now.Date]" DisplayName="Check pan expire" sap:VirtualizedContainerService.HintSize="701,51" sap2010:WorkflowViewState.IdRef="If_3">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <Assign sap:VirtualizedContainerService.HintSize="258,60" sap2010:WorkflowViewState.IdRef="Assign_16">
+          <Assign.To>
+            <OutArgument x:TypeArguments="ui:GenericValue">[strPExpire]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="ui:GenericValue">[""]</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+      <If.Else>
+        <Sequence sap:VirtualizedContainerService.HintSize="368,283" sap2010:WorkflowViewState.IdRef="Sequence_5">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign sap:VirtualizedContainerService.HintSize="330,60" sap2010:WorkflowViewState.IdRef="Assign_11">
+            <Assign.To>
+              <OutArgument x:TypeArguments="ui:GenericValue">[strPExpire]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="ui:GenericValue">["Pan card is expired."]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="330,91" sap2010:WorkflowViewState.IdRef="LogMessage_15" Level="Error" Message="[&quot;Pan Card Expired&quot;]" />
+        </Sequence>
+      </If.Else>
+    </If>
+    <If Condition="[dAddress.Equals(IAddress)]" DisplayName="Check licence address" sap:VirtualizedContainerService.HintSize="701,51" sap2010:WorkflowViewState.IdRef="If_4">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <Assign sap:VirtualizedContainerService.HintSize="258,60" sap2010:WorkflowViewState.IdRef="Assign_19">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:String">[strLAddress]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:String">
+              <Literal x:TypeArguments="x:String" Value="" />
+            </InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+      <If.Else>
+        <Sequence sap:VirtualizedContainerService.HintSize="368,283" sap2010:WorkflowViewState.IdRef="Sequence_9">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign sap:VirtualizedContainerService.HintSize="330,60" sap2010:WorkflowViewState.IdRef="Assign_12">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[strLAddress]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">["Licence address is not same."]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="330,91" sap2010:WorkflowViewState.IdRef="LogMessage_16" Level="Error" Message="[&quot;Licence address is not same&quot;]" />
+        </Sequence>
+      </If.Else>
+    </If>
+    <If Condition="[dLicenceID.Equals(INumber)]" DisplayName="Check licence ID" sap:VirtualizedContainerService.HintSize="701,51" sap2010:WorkflowViewState.IdRef="If_5">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <Assign sap:VirtualizedContainerService.HintSize="258,60" sap2010:WorkflowViewState.IdRef="Assign_20">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:String">[strLID]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:String">
+              <Literal x:TypeArguments="x:String" Value="" />
+            </InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+      <If.Else>
+        <Sequence sap:VirtualizedContainerService.HintSize="368,283" sap2010:WorkflowViewState.IdRef="Sequence_10">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign sap:VirtualizedContainerService.HintSize="330,60" sap2010:WorkflowViewState.IdRef="Assign_13">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[strLID]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">["Licence ID is not correct."]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="330,91" sap2010:WorkflowViewState.IdRef="LogMessage_17" Level="Error" Message="[&quot;Licence ID is not correct.&quot;]" />
+        </Sequence>
+      </If.Else>
+    </If>
+    <If Condition="[DateTime.ParseExact(IExpireDate,&quot;dd/MM/yyyy&quot;,Globalization.CultureInfo.InstalledUICulture) &gt; System.DateTime.Now.Date]" DisplayName="Check licence expire" sap:VirtualizedContainerService.HintSize="701,51" sap2010:WorkflowViewState.IdRef="If_6">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <Assign sap:VirtualizedContainerService.HintSize="258,60" sap2010:WorkflowViewState.IdRef="Assign_15">
+          <Assign.To>
+            <OutArgument x:TypeArguments="ui:GenericValue">[strLExpire]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="ui:GenericValue">[""]</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+      <If.Else>
+        <Sequence sap:VirtualizedContainerService.HintSize="368,283" sap2010:WorkflowViewState.IdRef="Sequence_11">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign sap:VirtualizedContainerService.HintSize="330,60" sap2010:WorkflowViewState.IdRef="Assign_14">
+            <Assign.To>
+              <OutArgument x:TypeArguments="ui:GenericValue">[strLExpire]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="ui:GenericValue">["Licence is expired."]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="330,91" sap2010:WorkflowViewState.IdRef="LogMessage_18" Level="Error" Message="[&quot;Licence Expired&quot;]" />
+        </Sequence>
+      </If.Else>
+    </If>
+    <If Condition="[strPName.ToString.Equals(&quot;&quot;) and strPID.Equals(&quot;&quot;) and strPExpire.Equals(&quot;&quot;) and strLAddress.Equals(&quot;&quot;) and strLID.Equals(&quot;&quot;) and strLExpire.Equals(&quot;&quot;)]" sap:VirtualizedContainerService.HintSize="701,293" sap2010:WorkflowViewState.IdRef="If_7">
+      <If.Then>
+        <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" From="{x:Null}" MailMessage="{x:Null}" Name="{x:Null}" TimeoutMS="{x:Null}" Body="[&quot;&lt;table&gt;&lt;tr&gt;&lt;td&gt;Hi &quot;+dName+&quot;,&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Your application is verified and your verified ID is &quot;+Right(Now.Millisecond.ToString, 8)+&quot;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Thanks,&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;AJ Robo&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&quot;]" DisplayName="Send SMTP Mail Message" Email="asrawat.contact@gmail.com" EnableSSL="True" sap:VirtualizedContainerService.HintSize="330,145" sap2010:WorkflowViewState.IdRef="SendMail_5" IsBodyHtml="True" Password="axlkywbtjtqruulh" Port="465" SecureConnection="SslOnConnect" Server="smtp.gmail.com" Subject="Verified !!" To="[dEmail]">
+          <ui:SendMail.Files>
+            <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
+              <InArgument x:TypeArguments="x:String">[in_Config("LicencePath").ToString]</InArgument>
+              <InArgument x:TypeArguments="x:String">[in_Config("PanPath").ToString]</InArgument>
+            </scg:List>
+          </ui:SendMail.Files>
+        </ui:SendMail>
+      </If.Then>
+      <If.Else>
+        <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" From="{x:Null}" MailMessage="{x:Null}" Name="{x:Null}" TimeoutMS="{x:Null}" Body="[&quot;&lt;table&gt;&lt;tr&gt;&lt;td&gt;Hi &quot;+dName+&quot;,&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Below are the details incorrect:&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&quot;+strPName+&quot;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&quot;+strPID+&quot;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&quot;+strPExpire+&quot;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&quot;+strLAddress+&quot;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&quot;+strLID+&quot;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&quot;+strLExpire+&quot;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Thanks,&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;AJ Robo&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&quot;]" DisplayName="Send SMTP Mail Message" Email="asrawat.contact@gmail.com" EnableSSL="True" sap:VirtualizedContainerService.HintSize="330,145" sap2010:WorkflowViewState.IdRef="SendMail_4" IsBodyHtml="True" Password="axlkywbtjtqruulh" Port="465" SecureConnection="SslOnConnect" Server="smtp.gmail.com" Subject="Some problem with details !!" To="[dEmail]">
+          <ui:SendMail.Files>
+            <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
+              <InArgument x:TypeArguments="x:String">[in_Config("LicencePath").ToString]</InArgument>
+              <InArgument x:TypeArguments="x:String">[in_Config("PanPath").ToString]</InArgument>
+            </scg:List>
+          </ui:SendMail.Files>
+        </ui:SendMail>
+      </If.Else>
+    </If>
+  </Sequence>
+</Activity>
